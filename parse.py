@@ -16,33 +16,30 @@ ids = []
 i = 0
 doub = []
 y = 0
-#with open('2017-03-29_annonces_paris.json') as f:
-with open('doub.json') as f:
+with open('2017-03-29_annonces_paris.json') as f:
     data = json.loads(f.read())
 i=0
-for d in data:
-    i+=1
-print i
+#for d in data:    #DEBUG
+#    i+=1
+#print i
 i = 0
 print bc.BLUE + "Cleaning ..." + bc.RESET
-for o in data:
-    if not 'title' in o:
-        data.pop(i)
-    if not 'propertyType' in o:
-        data.pop(i)
-    if not 'dealer' in o:
-        data.pop(i)
-    if not 'roomCount' in o:
-        data.pop(i)
-    if not 'description' in o:
-        data.pop(i)
-    if not 'surface' in o:
-        data.pop(i)
-    i += 1
 i = 0
 
 for x in data:
     try:
+        if not 'title' in x:
+            data.pop(y)
+        if not 'propertyType' in x:
+            data.pop(y)
+        if not 'dealer' in x:
+            data.pop(y)
+        if not 'roomCount' in x:
+            data.pop(y)
+        if not 'description' in x:
+            data.pop(y)
+        if not 'surface' in x:
+            data.pop(y)
         ap = ""
         s = ""
         ap = (str(x['title']) +
@@ -78,6 +75,10 @@ clean = set(li)
 print len(li)
 print len (data)
 
+doub = set(li)
+
+
+'''
 while x < len(li):
     y = x + 1
     while y < len(li):
@@ -86,29 +87,33 @@ while x < len(li):
             try:
                 del data[x]
             except Exception as e:
-                print bc.RED + str(e) + bc.RESET
+                print bc.RED + '.' + bc.RESET
+                data.pop(y)
+                #print bc.RED + str(e) + bc.RESET
         y+=1
     x+=1
-
+'''
 print bc.BLUE
-print "\n-_-_-_-_-_ "+ str(len(doub)) + " Doublons trouves _-_-_-_-_-\n"
+print "\n"+ str(len(doub)) + " Doublons trouves\n"
 print bc.RESET
-
+exit()
 for x in doub:
    print bc.CYAN + str(x) + bc.RESET
 
-print " ___ _ _ _ _ __ " + str(len(data))
-
-for x in range(len(data)):
+for x in range(len(doub)):
    print bc.CYAN + str(x) + bc.RESET
 
-clean = open("clean_final.json", 'w')
+clean = open("clean_final2.json", 'w')
 clean.write(json.dumps(data, indent=4))
-
-with open('clean_final.json') as c:
-    clean = json.loads(c.read())
-i=0
-for d in clean:
-    i+=1
-print i
-
+#print bc.CLEAN
+print bc.CYAN + """
+  ____                                __     
+ /\  _`\                             /\ \    
+ \ \ \/\ \    ___     ___      __    \ \ \   
+  \ \ \ \ \  / __`\ /' _ `\  /'__`\   \ \ \  
+   \ \ \_\ \/\ \L\ \/\ \/\ \/\  __/    \ \_\ 
+    \ \____/\ \____/\ \_\ \_\ \____\    \/\_\\
+     \/___/  \/___/  \/_/\/_/\/____/     \/_/
+                                                               
+                                                                                                           
+""" + bc.RESET
